@@ -1,16 +1,86 @@
-# React + Vite
+# 🍎 Web-based MAC OS 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A pixel-perfect, interactive macOS desktop environment built with **React**, **SCSS**, and **Vite**. This project focuses on high-fidelity UI/UX replication, featuring functional windows, a dynamic dock, and integrated third-party widgets like Spotify.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## React Compiler
+## 🚀 Live Demo
+**Check it out here:** [vishwakarmasanket.github.io/Web_based_MAC_OS/](https://vishwakarmasanket.github.io/Web_based_MAC_OS/)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
+* **Dynamic Dock**: Interactive app launcher with magnification effects and smart tooltips.
+* **Window Management**: Multiple functional windows (GitHub, Spotify, Notes) with Mac-style "traffic light" controls.
+* **Responsive Layout**: Designed to scale across different screen sizes using `rem` and flexible CSS units.
+* **Third-Party Integration**: Live Spotify player integration using the Spotify Embed API.
+* **Theming**: Sleek dark mode aesthetics with backdrop-filter blurs and glassmorphism.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tech Stack
+* **Frontend**: React.js 18
+* **Styling**: SCSS (Sass) utilizing BEM methodology
+* **Icons**: Custom SVG icons and FontAwesome
+* **Build Tool**: Vite for fast HMR (Hot Module Replacement)
+* **Deployment**: GitHub Pages
+
+---
+
+## 🔧 Technical Bug Fixes & Lessons Learned
+
+During development, I encountered and resolved several UI/UX challenges through deep debugging and AI collaboration:
+
+### 1. Dock Icon Geometry (Box Model)
+* **Problem**: Icons lost their perfect 1:1 square shape when the root font size changed, appearing rectangular on some screens.
+* **Solution**: Switched from `content-box` to `box-sizing: border-box` to ensure padding exists *inside* the defined dimensions. This eliminated sub-pixel rounding errors that were breaking the aspect ratio.
+
+### 2. Spotify Player Layout (Iframe Breakpoints)
+* **Problem**: The Spotify window displayed the full playlist locally but collapsed into a "Compact" bar when hosted on GitHub Pages.
+* **Solution**: Identified that the Spotify Embed API uses a **400px height threshold** to switch layouts. I implemented a `min-height: 450px` constraint on the container to force the "List" view in production.
+
+
+
+---
+
+## 📦 Installation & Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/VishwakarmaSanket/Web_based_MAC_OS.git](https://github.com/VishwakarmaSanket/Web_based_MAC_OS.git)
+
+```
+
+```
+2.**Install dependencies:**
+```bash
+npm install
+
+```
+
+
+3. **Run the development server:**
+```bash
+npm run dev
+
+```
+
+
+4. **Build for production:**
+```bash
+npm run build
+
+```
+
+
+
+---
+
+## 🎨 About the Designer
+
+Developed by **Sanket Vishwakarma**, a UI/UX and Product Designer passionate about bridging the gap between design and front-end development.
+
+* **Portfolio**: [Your Portfolio Link Here]
+* **LinkedIn**: [Sanket Vishwakarma](https://www.linkedin.com/in/sanket-vishwakarma-361224338/)
+
+```
