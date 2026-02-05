@@ -48,7 +48,6 @@ During development, I encountered and resolved several UI/UX challenges through 
 1. **Clone the repository:**
    ```bash
    git clone [https://github.com/VishwakarmaSanket/Web_based_MAC_OS.git](https://github.com/VishwakarmaSanket/Web_based_MAC_OS.git)
-
 ```
 
 ```
