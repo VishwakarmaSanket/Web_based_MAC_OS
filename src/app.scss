@@ -11,6 +11,10 @@ body,
     width: 100%;
 }
 
+html {
+    font-size: clamp(10px, 0.75vw, 12px);
+}
+
 main {
     height: 100%;
     width: 100%;

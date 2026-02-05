@@ -9,7 +9,7 @@ const Note = ({ windowName, setWindowsState }) => {
   const [markdown, setMarkdown] = useState(null);
 
   useEffect(() => {
-    fetch("/note.txt")
+    fetch(`${import.meta.env.BASE_URL}note.txt`)
       .then((res) => res.text())
       .then((text) => setMarkdown(text));
   }, []);
