@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c",
+    "title": "Horizon Courts Website",
+    "description": "A modern and responsive tennis club website built using React, Vite, and Tailwind CSS. Focused on clean UI, responsiveness, and smooth user experience.",
+    "tags": ["React", "Vite", "Tailwind CSS", "JavaScript"],
+    "repoLink": "https://github.com/VishwakarmaSanket/Horizon-courts-website",
+    "demoLink": "https://vishwakarmasanket.github.io/Horizon-courts-website/"
+  },
+  {
+    "id": 2,
+    "image": "https://images.unsplash.com/photo-1558655146-9f40138edfeb",
+    "title": "Alvy Studio Responsive Website",
+    "description": "A fully responsive studio website created as a frontend project, showcasing modern layout techniques and clean SCSS-based styling.",
+    "tags": ["HTML", "SCSS", "Responsive Design"],
+    "repoLink": "https://github.com/VishwakarmaSanket/alvy-studio-responsive-website",
+    "demoLink": "https://vishwakarmasanket.github.io/alvy-studio-responsive-website/"
+  },
+  {
+    "id": 3,
+    "image": "https://images.unsplash.com/photo-1511376777868-611b54f68947",
+    "title": "Virtual Piano",
+    "description": "An interactive virtual piano built using HTML, CSS, and JavaScript. Supports keyboard input and produces real-time sound effects.",
+    "tags": ["HTML", "CSS", "JavaScript"],
+    "repoLink": "https://github.com/VishwakarmaSanket/Virtual-Piano",
+    "demoLink": "https://vishwakarmasanket.github.io/Virtual-Piano/"
+  },
+  {
+    "id": 4,
+    "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+    "title": "Cohort 2.0 Practice Repository",
+    "description": "A collection of frontend and backend practice tasks completed during the Cohort 2.0 program, focusing on strengthening core development skills.",
+    "tags": ["CSS", "JavaScript", "Practice"],
+    "repoLink": "https://github.com/VishwakarmaSanket/Cohort2.0",
+    "demoLink": "https://vishwakarmasanket.github.io/Cohort2.0/"
+  },
+  {
+    "id": 5,
+    "image": "https://images.unsplash.com/photo-1507679799987-c73779587ccf",
+    "title": "Resume",
+    "description": "A simple and clean HTML-based resume showcasing my skills, education, and projects.",
+    "tags": ["HTML", "CSS"],
+    "repoLink": "https://github.com/VishwakarmaSanket/Resume",
+    "demoLink": "https://vishwakarmasanket.github.io/Resume/"
+  }
+]

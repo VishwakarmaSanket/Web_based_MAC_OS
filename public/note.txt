@@ -1,0 +1,156 @@
+/**
+ * @file: note.txt
+ * @author: Sanket Vishwakarma
+ * @summary: UI/UX focused developer learning full-stack development through real projects.
+ */
+
+// --------------------------------------------------
+// 1. CORE DEPENDENCIES & SKILLS
+// --------------------------------------------------
+
+const TECH_STACK = {
+  frontend: [
+    "React.js",        // Used in Horizon-courts-website
+    "Tailwind CSS",    // Production usage
+    "SCSS",            // alvy-studio-responsive-website
+    "HTML5",
+    "JavaScript"
+  ],
+
+  backend: [
+    "Node.js",         // Learning & practice
+    "Express.js",      // REST APIs
+    "REST Architecture"
+  ],
+
+  databases: [
+    "MongoDB",         // MERN learning
+    "MySQL",           // Learning
+    "PL/SQL"           // Academic
+  ],
+
+  design: [
+    "Figma",           // Strong
+    "Framer",          // Learning
+    "Affinity Designer", // Learning
+    "Spline (3D)"      // Learning
+  ],
+
+  tools: [
+    "Git",
+    "GitHub",
+    "VS Code",
+    "Linux"
+  ]
+};
+
+// --------------------------------------------------
+// 2. PROJECT EXPERIENCE (GitHub Based)
+// --------------------------------------------------
+
+interface Project {
+  name: string;
+  description: string;
+  tech: string[];
+}
+
+const PROJECTS: Project[] = [
+
+  {
+    name: "ENIGMA",
+    description:
+      "Academic / technical project focused on applying development fundamentals, " +
+      "problem-solving, and structured implementation in a team environment.",
+    tech: ["JavaScript", "HTML", "CSS", "Node.js (Basics)"]
+  },
+
+  {
+    name: "Horizon-courts-website",
+    description:
+      "Responsive tennis club website built using modern frontend tooling with a focus on layout and UI clarity.",
+    tech: ["React.js", "Vite", "Tailwind CSS"]
+  },
+
+  {
+    name: "alvy-studio-responsive-website",
+    description:
+      "Mobile-first responsive website using SCSS with clean structure and reusable styles.",
+    tech: ["HTML", "SCSS"]
+  },
+
+  {
+    name: "Virtual-Piano",
+    description:
+      "Interactive piano supporting keyboard and mouse input with DOM-based event handling.",
+    tech: ["HTML", "CSS", "JavaScript"]
+  },
+
+  {
+    name: "Cohort2.0",
+    description:
+      "Practice-based repository covering frontend and backend fundamentals through small tasks.",
+    tech: ["JavaScript", "HTML", "CSS"]
+  },
+
+  {
+    name: "Resume",
+    description:
+      "Simple HTML resume used as a base for online portfolio and GitHub Pages.",
+    tech: ["HTML"]
+  }
+];
+
+// --------------------------------------------------
+// 3. ACADEMIC & LEARNING CONTEXT
+// --------------------------------------------------
+
+const ACADEMICS = {
+  degree: "Engineering",
+  university: "Savitribai Phule Pune University, Pune",
+
+  focusAreas: [
+    "Full-Stack Development (MERN)",
+    "SCSS & Advanced CSS",
+    "REST API Design",
+    "MySQL & MongoDB",
+    "PL/SQL (Procedures, Functions, Cursors)",
+    "Computer Networking & Security",
+    "Cryptography (DES, AES)"
+  ]
+};
+
+// --------------------------------------------------
+// 4. DEVELOPMENT PHILOSOPHY
+// --------------------------------------------------
+
+const PRINCIPLES = [
+  "Build first, optimize later",
+  "Readable code over clever code",
+  "UI/UX is part of engineering",
+  "Simple solutions scale better",
+  "Dark-mode friendly by default"
+];
+
+// --------------------------------------------------
+// 5. STATUS
+// --------------------------------------------------
+
+export const STATUS = {
+  availability: "Open to Internships & Collaboration",
+  focus: "UI/UX + Full-Stack Development",
+  location: "India (Remote Friendly)"
+};
+
+
+/*
+--------------------------------------------------
+TERMINAL OUTPUT
+--------------------------------------------------
+
+$ profile --status
+> User: Sanket Vishwakarma
+> Stack: UI/UX + MERN (Learning)
+> Projects Loaded: 6
+> Mode: Learning & Building 🚀
+> Ready.
+*/
