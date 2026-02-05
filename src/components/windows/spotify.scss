@@ -1,32 +1,30 @@
-/* Target the actual window container for Spotify specifically */
 .window.spotify {
     min-height: 500px !important;
-    height: 500px;
-    display: flex !important; // Force flex behavior
-    flex-direction: column;
+    height: 500px !important;
 
     .window-content {
-        flex: 1; // Force this to fill the 500px height
-        display: flex; // Make it a flex container for its child
-        flex-direction: column;
-        min-height: 0; // CRITICAL: Fixes overflow issues in flex items
         height: 100%;
+        position: relative; // Needed for the absolute child
+        display: block; // Removing flex here to avoid conflicts
     }
 }
 
 .spotify-window {
-    flex: 1; // Fill all remaining space in .window-content
-    display: flex; // Make this a flex container for the iframe
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
+    height: 100%;
     background-color: #000;
-    overflow: hidden;
 
     iframe {
-        flex: 1;
-        /* This forces the iframe to grow to the container bottom */
-        width: 100%;
-        height: 100% !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important; // Force it to fill the absolute container
         border: none;
-        display: block; // Removes ghost spacing at the bottom
     }
 }
