@@ -4,6 +4,42 @@ import Terminal from "react-console-emulator";
 import "./cli.scss";
 
 const Cli = ({ windowName, setWindowsState }) => {
+  // Define the Welcome Message first so it can be referenced in commands
+  const welcomeMessage = `
+   ███████╗ █████╗ ███╗   ██╗██╗  ██╗███████╗████████╗
+   ██╔════╝██╔══██╗████╗  ██║██║ ██╔╝██╔════╝╚══██╔══╝
+   ███████╗███████║██╔██╗ ██║█████╔╝ █████╗     ██║   
+   ╚════██║██╔══██║██║╚██╗██║██╔═██╗ ██╔══╝     ██║   
+   ███████║██║  ██║██║ ╚████║██║  ██╗███████╗   ██║   
+   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝   ╚═╝   
+
+sanket@web-mac-os
+────────────────────────────────────────────────────────
+OS: SanketOS v2.0.0 (Sequoia Edition)
+Host: Portfolio-Web-Terminal
+Kernel: React 18.2.0 / Vite
+Uptime: ${new Date().toLocaleTimeString()}
+Shell: zsh 5.9 (x86_64-apple-darwin23.0)
+UI/UX: Glassmorphism / SCSS
+
+Welcome, explorer 👋
+UI/UX Designer & Full-Stack Developer
+
+Available Commands:
+  about      - Learn about my background
+  skills     - Technical stack & tools
+  projects   - View my recent work
+  experience - Career & academic history
+  contact    - Get in touch with me
+  social     - Social media links
+  github     - Open profile in new tab
+  resume     - Download latest CV
+  help       - List all commands
+  clear      - Reset terminal view
+
+Type a command to begin exploring.
+`;
+
   const commands = {
     about: {
       description: "About me",
@@ -17,35 +53,22 @@ const Cli = ({ windowName, setWindowsState }) => {
       usage: "skills",
       fn: () => `
 Programming:
-  • Java
-  • JavaScript
-  • Python
+  • Java, JavaScript, Python
 
 Web Development:
-  • HTML, CSS
-  • React
-  • Node.js, Express
+  • HTML, CSS, React, Node.js, Express
 
 UI/UX:
-  • Figma
-  • Wireframing & Prototyping
-  • Design Systems
-  • User-centered Design
+  • Figma, Wireframing, Design Systems, User-centered Design
 
 Databases:
-  • MySQL
-  • MongoDB
+  • MySQL, MongoDB
 
 Core Concepts:
-  • OOP
-  • JDBC
-  • Exception Handling
-  • CRUD Operations
-  • Basic API Authentication
+  • OOP, JDBC, CRUD, API Authentication
 
 Tools:
-  • Git & GitHub
-  • VS Code
+  • Git & GitHub, VS Code
 `,
     },
 
@@ -53,26 +76,11 @@ Tools:
       description: "View my projects",
       usage: "projects",
       fn: () => `
-1. Book Bazaar
-   - Platform to Buy, Sell & Rent Books
-   - UI/UX focused project for readers and offline vendors
-
-2. Little Lemon Restaurant App
-   - Online food ordering & table booking system
-   - Clean, modern UI with user-friendly flow
-
-3. AYUSH Startup Portal
-   - Professional web portal design
-   - Focus on usability, structure, and visual clarity
-
-4. Core Java CRUD Project
-   - JDBC integration
-   - Layered architecture
-   - Exception handling & database connectivity
-
-5. Personal Portfolio Website
-   - Hosted using GitHub
-   - Showcases projects, skills, and design work
+1. Book Bazaar - Buy, Sell & Rent Books
+2. Little Lemon Restaurant App - Online food ordering
+3. AYUSH Startup Portal - Professional web portal
+4. Core Java CRUD Project - JDBC layered architecture
+5. Personal Portfolio Website - This Web-based OS
 `,
     },
 
@@ -83,16 +91,12 @@ Tools:
 Academic & Project Experience
 
 • UI/UX Designer & Developer
-  - Designed multiple application interfaces using Figma
-  - Focused on accessibility, consistency, and clean layouts
+  - Designed application interfaces using Figma
+  - Focused on accessibility and clean layouts
 
 • Team Project Contributor
   - Collaborated using Git & GitHub
   - Worked on frontend structure and backend logic
-
-• Research Work
-  - Research paper on the role of body language in non-verbal communication
-  - Project documentation & analysis for Book Bazaar
 `,
     },
 
@@ -103,7 +107,7 @@ Academic & Project Experience
 Name: Sanket Vishwakarma
 Location: India
 GitHub: https://github.com/VishwakarmaSanket
-Email: (add your email here)
+Email: [Your Email Here]
 `,
     },
 
@@ -127,9 +131,20 @@ Email: (add your email here)
       usage: "social",
       fn: () => `
 GitHub: https://github.com/VishwakarmaSanket
-LinkedIn: (add your LinkedIn URL)
-Portfolio: (add your hosted portfolio link)
+LinkedIn: [Your LinkedIn URL]
 `,
+    },
+
+    neofetch: {
+      description: "Display system information",
+      usage: "neofetch",
+      fn: () => welcomeMessage,
+    },
+
+    matrix: {
+      description: "Enter the Matrix",
+      usage: "matrix",
+      fn: () => "Searching for Neo... [Connection Terminated]",
     },
 
     echo: {
@@ -139,31 +154,33 @@ Portfolio: (add your hosted portfolio link)
     },
   };
 
-  const welcomeMessage = `
-╔════════════════════════════════════════╗
-║     Welcome to My Portfolio CLI!       ║
-╚════════════════════════════════════════╝
-
-Hello! 👋 Welcome to my interactive portfolio. You can navigate through my work experience, skills, and projects using terminal commands.
-
-Type 'help' to see all available commands, or try:
-  • about     - Learn about me
-  • skills    - View my technical skills
-  • projects  - Check out my work
-  • experience - See my career history
-  • contact   - Get in touch
-
-Happy exploring! 🚀
-`;
-
   return (
     <MacWindow windowName={windowName} setWindowsState={setWindowsState}>
       <div className="cli-window">
         <Terminal
           commands={commands}
           welcomeMessage={welcomeMessage}
-          promptLabel={"sanketvishwakarma:~$"}
-          promptLabelStyle={{ color: "#00ff00" }}
+          autoFocus={true}
+          scrollBehavior="smooth"
+          // Modern ZSH Prompt style
+          promptLabel={"@sanketVishwakarma:~$"}
+          promptLabelStyle={{
+            color: "#61afef",
+            fontWeight: "bold",
+            marginRight: "8px",
+          }}
+          inputTextStyle={{
+            color: "#ffffff",
+            caretColor: "#00ff00",
+            fontFamily: "'Fira Code', monospace",
+          }}
+          style={{
+            backgroundColor: "transparent",
+            minHeight: "100%",
+          }}
+          contentStyle={{
+            padding: "20px",
+          }}
         />
       </div>
     </MacWindow>

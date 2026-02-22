@@ -1,11 +1,98 @@
+/* Color & Effect Variables */
+$term-bg: rgba(15, 15, 15, 0.7);
+$term-accent: #00ff41; // Classic Terminal Green
+$term-blue: #61afef; // ZSH Style Blue
+$mac-border: rgba(255, 255, 255, 0.1);
+
 .cli-window {
     height: 100%;
-    overflow: auto;
-    padding-bottom: 3rem;
-    background-color: #222222;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    /* We let the internal console handle the scroll */
+
+    /* Sequoia Glassmorphism Effect */
+    background-color: $term-bg !important;
+    backdrop-filter: blur(25px) saturate(200%);
+    -webkit-backdrop-filter: blur(25px) saturate(200%);
+
+    /* Unified Mac Bottom Corners */
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border: 1px solid $mac-border;
+    border-top: none;
+
+    /* Unique Feature: Subtle Scanline Overlay */
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+                rgba(0, 0, 0, 0.05) 50%);
+        background-size: 100% 4px;
+        z-index: 10;
+        pointer-events: none;
+        opacity: 0.3;
+    }
 
     div[name="react-console-emulator"] {
-        height: 100%;
+        height: 100% !important;
         background-color: transparent !important;
+
+        /* Internal Scrolling & Padding */
+        section {
+            padding: 1.8rem !important;
+            /* Slightly more breathing room */
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+
+            /* Custom Scrollbar for Chrome/Safari */
+            &::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+            }
+        }
+
+        /* Typography Refinement */
+        span,
+        input,
+        div {
+            font-family: 'Fira Code', 'JetBrains Mono', 'Menlo', monospace !important;
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+            /* Increased for better legibility */
+            letter-spacing: 0.02em;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Styling the Input Area for "Focus" vibe */
+        .terminal-input-area {
+            margin-top: 10px;
+            padding: 5px 0;
+
+            input {
+                caret-color: $term-accent;
+                /* Glowing green cursor */
+                outline: none !important;
+            }
+        }
+    }
+}
+
+/* Standout Feature: Active Command Highlighting */
+.terminal-output-line {
+    transition: transform 0.2s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.03);
+        transform: translateX(4px);
     }
 }
