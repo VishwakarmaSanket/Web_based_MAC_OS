@@ -4,6 +4,8 @@ An interactive portfolio website that recreates the look and feel of a macOS des
 
 Live site: [vishwakarmasanket.github.io/Web_based_MAC_OS](https://vishwakarmasanket.github.io/Web_based_MAC_OS/)
 
+**Developer documentation:** [Read the detailed Technical Reference](docs/TECHNICAL_REFERENCE.md) for architecture, window lifecycle, component flows, static data contracts, build/deployment details, and known implementation limitations.
+
 ## Overview
 
 The application opens as a desktop-style portfolio rather than a traditional webpage. Visitors can use the dock to launch portfolio tools, drag and resize each window, and close windows with the red traffic-light control.
@@ -105,7 +107,7 @@ External actions such as Calendar, Mail, and LinkedIn do not create an internal 
 
 ## Requirements
 
-- Node.js 18 or newer
+- Node.js 20.19+ or 22.12+ (required by the Vite 7 version declared in this repository)
 - npm 9 or newer
 - A modern browser with support for CSS backdrop filters and embedded content
 
@@ -170,7 +172,7 @@ Edit [`src/assets/github.json`](src/assets/github.json). Each project should pro
 }
 ```
 
-`demolink` is optional. The repository link is always displayed.
+`demolink` is optional. The repository link is always displayed. The current JSON file uses `repoLink`/`demoLink`, while `Github.jsx` reads `repolink`/`demolink`; these names are case-sensitive, so align them in source for the intended links to render.
 
 ### Update personal content
 
