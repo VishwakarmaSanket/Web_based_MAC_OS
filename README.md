@@ -170,7 +170,7 @@ Edit `src/assets/github.json`. Each record contains:
 | `repoLink` | Repository URL in the source data |
 | `demoLink` | Demo URL in the source data |
 
-Keep the field names consistent between the JSON and `src/components/windows/Github.jsx` when changing project links.
+**Current caveat:** the JSON defines `repoLink` and `demoLink`, while `src/components/windows/Github.jsx` currently reads `repolink` and `demolink`. Property names are case-sensitive, so project links will not receive the intended URLs until those names are aligned in the application code.
 
 ### Update the Notes window
 
