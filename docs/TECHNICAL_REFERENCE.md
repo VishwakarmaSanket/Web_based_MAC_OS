@@ -289,3 +289,272 @@ Cli uses react-console-emulator with a locally defined commands object. It does 
 | echo | Joins passed arguments with spaces |
 
 The banner also lists help and clear, but neither has an application-defined handler in the local commands object. Any behavior depends on react-console-emulator. The displayed OS/kernel/host/uptime details are presentation copy, not real system information. Use the dock's PDF icon to open the actual résumé asset.
+
+
+## 6. Interaction walkthroughs
+
+### Open an internal application
+
+1. The user clicks a dock icon.
+2. The icon handler sets one windowsState flag to true through a functional React state update.
+3. App rerenders and mounts the corresponding feature component.
+4. The feature wraps its contents with MacWindow.
+5. react-rnd provides drag and resize mechanics around the window.
+6. The red control sets the state flag to false and the component unmounts.
+
+### Browse project cards
+
+1. github.json is imported as a static JavaScript module.
+2. Github maps records to GitCard components.
+3. Each card renders image, title, description and tags directly from its data.
+4. Repository/demo anchors depend on the link keys described in the Github section.
+5. Images load directly from Unsplash; application code does not cache them or render a dedicated image-error fallback.
+
+### Load Notes
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Dock
+    participant App
+    participant Notes as Note.jsx
+    participant Fetch as Browser Fetch
+    participant Asset as public/note.txt
+    User->>Dock: Click Note
+    Dock->>App: Set note=true
+    App->>Notes: Mount inside MacWindow
+    Notes->>Fetch: Request note.txt under BASE_URL
+    Fetch->>Asset: GET static text
+    Asset-->>Fetch: Response body
+    Fetch-->>Notes: Convert response to text
+    Notes->>Notes: setMarkdown(text)
+    Notes-->>User: Syntax-highlighted content
+```
+
+There is no explicit failure branch. A rejected fetch or empty response can leave the loading placeholder visible.
+
+### External navigation
+
+Calendar, Mail and LinkedIn handlers in Dock call window.open directly. The CLI github command also opens a fixed profile URL. These calls do not go through a backend route or internal window-state transition. Popup policy and the visitor's registered mail handler can affect the result.
+
+### Update the date/time
+
+DateTime's effect updates a local Date object every second and relies on React to rerender. Its cleanup clears the interval when the component unmounts. This is a browser timer, not a scheduled backend task.
+
+## 7. Static data and assets
+
+### Project data schema
+
+Source: src/assets/github.json. The current file contains five project records.
+
+| Field | Type observed in JSON | Use |
+|---|---|---|
+| id | Number | React key for each card |
+| image | String URL | Image source |
+| title | String | Card heading and image alt text |
+| description | String | Summary paragraph |
+| tags | Array of strings | Technology tag list |
+| repoLink | String URL | Repository URL in JSON; currently not read because the consumer uses different casing |
+| demoLink | String URL | Demo URL in JSON; currently not read because the consumer uses different casing |
+
+Representative record:
+
+```json
+{
+  "id": 1,
+  "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c",
+  "title": "Horizon Courts Website",
+  "description": "A modern and responsive tennis club website built using React, Vite, and Tailwind CSS.",
+  "tags": ["React", "Vite", "Tailwind CSS", "JavaScript"],
+  "repoLink": "https://github.com/VishwakarmaSanket/Horizon-courts-website",
+  "demoLink": "https://vishwakarmasanket.github.io/Horizon-courts-website/"
+}
+```
+
+The record structure is static build-time data, not a database row or API response. There is no runtime schema validation.
+
+### Notes and résumé files
+
+- public/note.txt is requested as plain text and presented with syntax highlighting. Its TypeScript-like syntax is content, not executable application code.
+- public/MyResume.pdf is served as a static document and embedded by Resume.jsx.
+- The UI has no upload or replace-file workflow for either asset.
+
+### Icons and wallpapers
+
+- public/doc-icons contains the dock icons.
+- public/navbar-icons contains the Apple and Wi-Fi icons.
+- public/wallpaper.jpg and public/wallpaper2.jpg are background assets.
+- public/vite.svg is present but not used by the active app components.
+
+The assets are committed files, not dynamically generated images. There is no user-uploaded asset storage.
+
+## 8. Network and external interfaces
+
+### Browser-level request inventory
+
+| Resource | Initiator | Inputs | Application handling |
+|---|---|---|---|
+| Notes text | Fetch in Note.jsx | URL built with BASE_URL, no body or explicit custom headers | Converts response to text; no status check or catch handler |
+| Résumé | HTML embed in Resume.jsx | PDF URL under BASE_URL | Browser PDF viewer handles display |
+| Spotify playlist | Iframe in Spotify.jsx | Fixed playlist ID and query string | Third-party player handles rendering and playback |
+| Project thumbnails | Image elements in Github.jsx | Unsplash URLs from JSON | Browser loads image; no explicit fallback handler |
+| Calendar | window.open in Dock.jsx | Fixed Google Calendar URL | Browser opens external site if allowed |
+| Email | window.open in Dock.jsx | Fixed mailto recipient | Browser or OS mail handler processes it |
+| LinkedIn | window.open in Dock.jsx | Fixed profile URL | Browser opens external site |
+| GitHub profile | CLI command github | Fixed profile URL | Browser opens external site |
+
+### Application API inventory
+
+There are no application API endpoints in this repository. There is no backend router, request validation, application-specific HTTP error envelope, authentication middleware, database operation, event consumer or queue to trace. Vite's development server and GitHub Pages serve frontend files; these infrastructure servers are not application business APIs.
+
+### Environment configuration and asset paths
+
+No custom named application environment variables are read by the checked-in source. The application uses Vite's built-in import.meta.env.BASE_URL in dock icon paths, the Notes request, and the PDF embed. vite.config.js currently configures the value as /Web_based_MAC_OS/.
+
+The wallpaper is referenced in src/app.scss as url(/wallpaper2.jpg). That path is root-relative while the published app lives under a repository subpath. Verify the final built URL on GitHub Pages before concluding whether it currently fails.
+
+## 9. Dependencies and configuration
+
+### Runtime dependencies
+
+Versions are the declared ranges in package.json.
+
+| Package | Declared range | Responsibility |
+|---|---|---|
+| react | ^19.2.0 | UI components and state |
+| react-dom | ^19.2.0 | Browser rendering |
+| react-rnd | ^10.5.2 | Draggable/resizable window frames |
+| react-console-emulator | ^5.0.2 | Terminal emulator UI |
+| react-syntax-highlighter | ^16.1.0 | Syntax-highlight Notes output |
+| react-markdown | ^10.1.0 | Imported in Note.jsx but unused by the active renderer |
+| sass | ^1.97.3 | SCSS processing |
+
+### Development dependencies
+
+| Package | Declared range | Responsibility |
+|---|---|---|
+| vite | ^7.2.4 | Development server and production build |
+| @vitejs/plugin-react | ^5.1.1 | React integration |
+| eslint | ^9.39.1 | Linting |
+| @eslint/js | ^9.39.1 | Recommended JavaScript rules |
+| eslint-plugin-react-hooks | ^7.0.1 | Hooks lint rules |
+| eslint-plugin-react-refresh | ^0.4.24 | React Refresh lint rules |
+| globals | ^16.5.0 | Browser globals in ESLint |
+| @types/react and @types/react-dom | Declared ranges | Type declarations; active source is JS/JSX |
+| gh-pages | ^6.3.0 | Publishes dist output |
+
+package-lock.json is present. No server framework, database driver, API SDK, queue library, scheduler or test runner is declared.
+
+### ESLint
+
+eslint.config.js uses flat config with JavaScript recommended rules, React Hooks rules, React Refresh rules, and browser globals. It ignores dist. There is no test or type-check script in package.json.
+
+### Authentication and authorization
+
+No app account system, login/session handling, role checks or API token handling are implemented. External sites such as Google, Spotify, LinkedIn and GitHub have their own authentication and browser policies outside this application.
+
+## 10. Styling system
+
+### Global desktop
+
+src/app.scss resets margin and padding, applies border-box sizing, gives html/body/root full viewport dimensions, sets the base font size to 10px, and uses wallpaper2.jpg as a centered cover background. Because many component values use rem units, they are scaled against the custom 10px base.
+
+### Navigation and dock
+
+- nav.scss supplies a translucent navigation surface, flex-aligned groups and backdrop blur.
+- dock.scss centers the dock near the bottom, styles icon tiles, applies per-app colors and adds hover magnification for the hovered icon and its neighbors.
+- The neighboring-icon effect uses CSS :has(), so it relies on browser support for that selector.
+
+The icon launchers are div elements with click handlers. The JSX does not explicitly provide semantic button behavior, tab order, keyboard activation, or focus styling.
+
+### Windows and feature content
+
+- window.scss defines dark rounded windows, title bars, traffic-light colors, scrollbars and content layout.
+- github.scss styles responsive cards, 16:9 thumbnails, tags, links and hover elevation.
+- note.scss defines the scrollable Notes area and syntax-highlighter background.
+- resume.scss makes the PDF embed fill the available content region.
+- spotify.scss styles the iframe container and its minimum height.
+- cli.scss provides the terminal glass surface, blur, scanline overlay, monospace typography and scrolling.
+
+Vite processes SCSS imported from JSX modules. There is no separate Sass compilation script.
+
+## 11. Failure paths and implementation observations
+
+The items below are observations from source inspection, not claims of a confirmed production incident.
+
+| Area | Current source behavior | Practical consequence |
+|---|---|---|
+| Project link keys | JSON uses repoLink/demoLink; Github.jsx reads repolink/demolink | Intended repository/demo URLs are not passed to anchors |
+| Notes fetch | No response.ok check, catch, retry, timeout, or abort | Failure can leave Loading visible and may create an unhandled rejection |
+| Empty Notes response | Empty string is falsy | The loading placeholder remains visible |
+| CLI resume command | Returns a message without starting a download | Message is inaccurate; use the PDF dock app |
+| CLI help/clear | Listed in banner but absent from custom command map | Behavior depends on react-console-emulator defaults |
+| Window controls | Only red dot has an action | Yellow/green dots are decorative |
+| Spotify style prop | MacWindow does not consume style | Passed style object is ignored |
+| External navigation | Some window.open calls do not include explicit noopener/noreferrer features | Consider hardening external navigation when revising link handling |
+| Project tags | Tag map does not include a React key | React can emit list-key warnings |
+| Wallpaper path | Root-relative reference with a repository subpath base | Confirm the final URL in the deployed build |
+| Window persistence | State and geometry are not persisted | Windows reset to defaults on reload |
+| External assets | Spotify/Unsplash content requires third-party availability | Network/privacy/service behavior can change the display |
+| Terminal output | Command responses are hard-coded | Displayed system details are not runtime telemetry |
+| Alternate source file | latest/src/App.jsx is not imported by the active page | Editing it will not change the live app |
+
+The application has no backend logging, metrics, tracing, health endpoints, rate limiting, transaction boundaries, queue instrumentation or graceful backend shutdown because there is no backend process in this repository.
+
+## 12. Troubleshooting
+
+### Blank page or failed imports
+
+1. Run npm install in the repository root.
+2. Start npm run dev and open the URL printed by Vite.
+3. Inspect the browser console for module import or Sass compilation errors.
+4. Confirm that the active chain is src/main.jsx → src/App.jsx, not latest/src/App.jsx.
+
+### Notes remains on Loading
+
+1. Open the Network panel and inspect the note.txt request.
+2. Confirm public/note.txt is present in the deployed static assets.
+3. Check console errors. Note.jsx doesn't render a failure state or retry.
+
+### Project cards have no working links
+
+Compare the keys in src/assets/github.json with the property lookups in src/components/windows/Github.jsx. The camelCase/lowercase mismatch needs to be aligned in application source.
+
+### Résumé does not display
+
+Confirm public/MyResume.pdf exists in the built output and the browser can display embedded PDFs. The app does not handle PDF-loading errors itself.
+
+### Spotify is blank or compact
+
+Check connectivity and browser embed/privacy restrictions. Increase window height for more room. Spotify controls its internal player and sign-in UI.
+
+### Wallpaper works locally but not after deployment
+
+Inspect the final built URL for the wallpaper. The deployed base is /Web_based_MAC_OS/, so verify the Network request path rather than assuming root-relative paths behave identically locally and on GitHub Pages.
+
+### Styling changes do not appear
+
+Confirm the component imports the intended SCSS module and the dev/build pipeline processes it. Avoid editing an unused alternate file and expecting the active UI to update.
+
+## 13. Traceability reference
+
+| Behavior | Source path |
+|---|---|
+| Startup | index.html → src/main.jsx → src/App.jsx |
+| Open/closed window state | windowsState in App.jsx; setters in Dock.jsx |
+| Close control | Red-dot handler in MacWindow.jsx |
+| Drag and resize | react-rnd configuration in MacWindow.jsx |
+| Dock actions | Click handlers in Dock.jsx |
+| Date/time | useEffect, interval and formatter in DateTime.jsx |
+| Project cards and data | Github.jsx and src/assets/github.json |
+| Notes request | useEffect/fetch in Note.jsx and public/note.txt |
+| Résumé embed | Resume.jsx and public/MyResume.pdf |
+| Spotify embed | Spotify.jsx and spotify.scss |
+| Terminal commands | commands object and welcomeMessage in Cli.jsx |
+| Wallpaper | src/app.scss and public/wallpaper2.jpg |
+| Build/deploy | package.json and vite.config.js |
+| Lint rules | eslint.config.js |
+
+### Verification boundary
+
+This guide reflects static inspection of the complete recursive repository tree and the active application, component, data, configuration and stylesheet files. No browser-based test run or deployment verification was performed for this documentation task. Browser-dependent behavior and third-party embed behavior are identified as such; risks are described as source observations rather than confirmed production failures.
